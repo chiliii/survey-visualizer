@@ -6,6 +6,7 @@ class Domain(enum.Enum):
     MACQ = "macq"
     VAMHRI = "vamhri"
     XAIP = "xaip"
+    RMI = "rmi"
 
     @classmethod
     def map_to_value(cls, incoming_value):
