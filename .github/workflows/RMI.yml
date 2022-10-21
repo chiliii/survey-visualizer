@@ -1,16 +1,16 @@
-name: macq
+name: rmi
 
 on:
   workflow_dispatch:
     branches: [main]
 
 env:
-  CONFIG_FILE_PATH: ./src/compiler/data/macq.yaml
+  CONFIG_FILE_PATH: ./src/config.yaml
   IMAGE_REPO: registry.heroku.com
-  APP_NAME: macq
+  APP_NAME: rmi-hri
   HEROKU_PROCESS_TYPE: web
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  NEW_CONFIG_FILE: macq.yaml
+  HEROKU_API_KEY: d39f1ad6-ceaa-44a9-9c22-b95947c65774
+  NEW_CONFIG_FILE: rmi.yaml
 
 jobs:
   setup-build-push-deploy:
@@ -32,39 +32,12 @@ jobs:
           pip3 install --upgrade --no-cache-dir huggingface-hub
           pip3 install --no-cache-dir -r "requirements.txt"
           pip3 install --no-cache-dir setuptools Levenshtein
-          pip3 install --no-cache-dir -r ./src/deployments/deployment_requirements.txt
-      - name: Handle Dropbox auth
-        id: vars
-        shell: bash
-        env:
-          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
-          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
-          DROPBOX_APP_REFRESH_TOKEN: ${{ secrets.DROPBOX_APP_REFRESH_TOKEN }}
-          DROPBOX_AUTH_JSON_PATH: "./src/deployments/dropbox_auth.json"
-          NEW_DROPBOX_AUTH_FILE: "postman_collection.json"
-          DROPBOX_RESPONSE_FILE: "dropbox_response.txt"
-          JSON_READER_PATH: "./src/deployments/json_reader.py"
-        run: |
-          sed -e "s/DROPBOX-APP-SECRET/\"$DROPBOX_APP_SECRET\"/g" -e "s/DROPBOX-APP-KEY/\"$DROPBOX_APP_KEY\"/g" -e "s/DROPBOX-APP-REFRESH-TOKEN/\"$DROPBOX_APP_REFRESH_TOKEN\"/g" $DROPBOX_AUTH_JSON_PATH > $NEW_DROPBOX_AUTH_FILE
-          newman run --verbose $NEW_DROPBOX_AUTH_FILE | grep access_token -A 3 | sed -z 's/\n//g'| sed 's/ //g' | sed 's/\│//g'> $DROPBOX_RESPONSE_FILE
-          echo "::set-output name=dropbox_token::$(python $JSON_READER_PATH $DROPBOX_RESPONSE_FILE)"
-      - name: Download & build dependencies
-        env:
-          DROPBOX_ACCESS_TOKEN: ${{steps.vars.outputs.dropbox_token}}
-          DROPBOX_FOLDER: macq_pdf
-          LOCAL_PDF_FOLDER: pdfs
-          SLUG: ${{ secrets.MACQ_SLUG }}
-          DROPBOX_HELPER_PATH: "./src/deployments/dropbox_helper.py"
-        run: |
-          curl -L "https://docs.google.com/spreadsheets/d/${SLUG}/export?format=xlsx" > slug.xlsx
-          mkdir $LOCAL_PDF_FOLDER
-          python $DROPBOX_HELPER_PATH $DROPBOX_ACCESS_TOKEN $DROPBOX_FOLDER $LOCAL_PDF_FOLDER
       - name: Edit app configuration
         env:
-          SLUG_FILE_PATH_PATTERN: path\/to\/spreadsheet
-          SLUG_FILE_PATH_PATTERN_TO_REPLACE_WITH: .\/slug.xlsx
-          PDF_FOLDER_PATH_PATTERN: \/path\/to\/PDFs
-          PDF_FOLDER_PATH_PATTERN_TO_REPLACE_WITH: .\/pdfs
+          SLUG_FILE_PATH_PATTERN: ./src\compiler\data
+          SLUG_FILE_PATH_PATTERN_TO_REPLACE_WITH: ./slug.xlsx
+          PDF_FOLDER_PATH_PATTERN: ./src\compiler\
+          PDF_FOLDER_PATH_PATTERN_TO_REPLACE_WITH: ./pdfs
           WORKSHEET_PATTERN: "active_worksheet: main"
           WORKSHEET_PATTERN_TO_REPLACE_WITH: "active_worksheet: slug"
         run: |
