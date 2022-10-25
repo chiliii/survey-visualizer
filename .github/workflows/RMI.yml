@@ -34,18 +34,8 @@ jobs:
           pip3 install --upgrade --no-cache-dir huggingface-hub
           pip3 install --no-cache-dir -r "requirements.txt"
           pip3 install --no-cache-dir setuptools Levenshtein
-      - name: Edit app configuration
-        env:
-          SLUG_FILE_PATH_PATTERN: ./src/compiler/data
-          SLUG_FILE_PATH_PATTERN_TO_REPLACE_WITH: ./slug.xlsx
-          PDF_FOLDER_PATH_PATTERN: ./src/compiler
-          PDF_FOLDER_PATH_PATTERN_TO_REPLACE_WITH: ./pdfs
-          WORKSHEET_PATTERN: "active_worksheet: main"
-          WORKSHEET_PATTERN_TO_REPLACE_WITH: "active_worksheet: slug"
-        run: |
-          sed -e "s/${SLUG_FILE_PATH_PATTERN}/${SLUG_FILE_PATH_PATTERN_TO_REPLACE_WITH}/g" -e "s/${PDF_FOLDER_PATH_PATTERN}/${PDF_FOLDER_PATH_PATTERN_TO_REPLACE_WITH}/g" -e "s/${WORKSHEET_PATTERN}/${WORKSHEET_PATTERN_TO_REPLACE_WITH}/g" $CONFIG_FILE_PATH > $NEW_CONFIG_FILE
       - name: Generate build sources
-        run: python src/compiler/compile.py --file $NEW_CONFIG_FILE
+        run: python src/compiler/compile.py --file $CONFIG_FILE_PATH
       - name: Install node dependencies
         run: |
           yarn install --ignore-engines
