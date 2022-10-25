@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  CONFIG_FILE_PATH: ./src/config.yaml
+  CONFIG_FILE_PATH: ./src/review.yaml
   IMAGE_REPO: registry.heroku.com
   APP_NAME: rmi-hri
   HEROKU_PROCESS_TYPE: web
