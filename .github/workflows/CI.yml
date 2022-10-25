@@ -1,6 +1,8 @@
 name: CI
 
-on: [pull_request]
+on:
+  workflow_dispatch:
+    branches: [main]
 
 jobs:
   setup-build:
