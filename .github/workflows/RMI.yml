@@ -10,7 +10,6 @@ env:
   APP_NAME: rmi-hri
   HEROKU_PROCESS_TYPE: web
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  NEW_CONFIG_FILE: rmi.yaml
 
 jobs:
   setup-build-push-deploy:
