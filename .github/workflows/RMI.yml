@@ -29,6 +29,7 @@ jobs:
           node -v
           sudo npm install -g yarn
           sudo npm install -g newman
+          pip3 install --upgrade --no-cache-dir huggingface-hub
           pip3 install --no-cache-dir -r "requirements.txt"
           pip3 install --no-cache-dir setuptools Levenshtein
       - name: Edit app configuration
