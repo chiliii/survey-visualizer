@@ -22,7 +22,7 @@ jobs:
       - name: Key
         run: |
           echo "Hallo"
-          echo $HEROKU_API_KEY
+          echo ${{ secrets.HEROKU_API_KEY }}
       - name: Install OS packages
         run: |
           sudo apt update
