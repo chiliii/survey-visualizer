@@ -36,9 +36,9 @@ jobs:
           pip3 install --no-cache-dir setuptools Levenshtein
       - name: Edit app configuration
         env:
-          SLUG_FILE_PATH_PATTERN: ./src\compiler\data
+          SLUG_FILE_PATH_PATTERN: ./src/compiler/data
           SLUG_FILE_PATH_PATTERN_TO_REPLACE_WITH: ./slug.xlsx
-          PDF_FOLDER_PATH_PATTERN: ./src\compiler\
+          PDF_FOLDER_PATH_PATTERN: ./src/compiler
           PDF_FOLDER_PATH_PATTERN_TO_REPLACE_WITH: ./pdfs
           WORKSHEET_PATTERN: "active_worksheet: main"
           WORKSHEET_PATTERN_TO_REPLACE_WITH: "active_worksheet: slug"
