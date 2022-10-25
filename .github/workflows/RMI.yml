@@ -49,6 +49,7 @@ jobs:
         run: docker build -f $Dockerfile_PATH -t $IMAGE_REPO/$APP_NAME/$HEROKU_PROCESS_TYPE .
       - name: Setup Heroku CLI
         run: |
+          heroku login
           curl https://cli-assets.heroku.com/install.sh | sh
           heroku container:login
       - name: Push docker image
