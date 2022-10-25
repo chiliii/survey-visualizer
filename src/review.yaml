@@ -10,7 +10,7 @@ metadata:
     year={2023}}"
   link_to_contribute: false
   link_to_code: https://github.com/TathagataChakraborti/survey-visualizer
-  primary_link: https://storage.bhs.cloud.ovh.net/v1/AUTH_26879f98162b4e0092dbf77201f410cb/chi23b/chi23b-sub6361-i13.pdf?temp_url_sig=08cc959d2665eb511d7b04c7bdba37921752cdf9&temp_url_expires=1666715960
+  primary_link: false
   secondary_links: false
   community_link: false
   info_tile: false
