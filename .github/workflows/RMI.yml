@@ -9,7 +9,7 @@ env:
   IMAGE_REPO: registry.heroku.com
   APP_NAME: rmi-hri
   HEROKU_PROCESS_TYPE: web
-  HEROKU_API_KEY: d39f1ad6-ceaa-44a9-9c22-b95947c65774
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   NEW_CONFIG_FILE: rmi.yaml
 
 jobs:
