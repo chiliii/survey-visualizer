@@ -19,10 +19,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Key
-        run: |
-          echo "Hallo"
-          echo ${{ secrets.HEROKU_API_KEY }}
       - name: Install OS packages
         run: |
           sudo apt update
@@ -53,7 +49,6 @@ jobs:
         run: docker build -f $Dockerfile_PATH -t $IMAGE_REPO/$APP_NAME/$HEROKU_PROCESS_TYPE .
       - name: Setup Heroku CLI
         run: |
-          heroku login
           curl https://cli-assets.heroku.com/install.sh | sh
           heroku container:login
       - name: Push docker image
