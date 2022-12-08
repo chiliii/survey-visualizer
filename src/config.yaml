@@ -87,8 +87,8 @@ views:
       columns:
         start: 17
         stop: 23
-  - tab_name: Intent Technology
-    title_text: Taxonomy View of Intent Technology
+  - tab_name: Intent Location
+    title_text: Taxonomy View of Intent Location
     disabled: false
     fancy_chart: true
     fancy_chart_default_level: 2

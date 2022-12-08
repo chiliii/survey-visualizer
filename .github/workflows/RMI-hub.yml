@@ -1,4 +1,4 @@
-name: rmi
+name: rmi-hub
 
 on:
   workflow_dispatch:
