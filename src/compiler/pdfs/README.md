@@ -1,3 +1,3 @@
 # PDF Repository
 
-Sample PDFs.
+Corpus PDFs.

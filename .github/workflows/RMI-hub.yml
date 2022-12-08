@@ -1,0 +1,57 @@
+name: rmi
+
+on:
+  workflow_dispatch:
+    branches: [main]
+
+env:
+  CONFIG_FILE_PATH: ./src/review.yaml
+  IMAGE_REPO: registry.heroku.com
+  APP_NAME: rmi-hri
+  HEROKU_PROCESS_TYPE: web
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+jobs:
+  setup-build-push-deploy:
+    name: Setup, Build, Push, and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install OS packages
+        run: |
+          sudo apt update
+          sudo apt install -y nodejs npm curl python3-pip python3-setuptools
+          node -v
+          sudo npm install -g n
+          sudo n 14.15.1
+          node -v
+          pip3 install pip --upgrade
+          sudo npm install -g yarn
+          sudo npm install -g newman
+          pip3 install pyOpenSSL --upgrade
+          pip3 install --upgrade --no-cache-dir huggingface-hub
+          pip3 install --no-cache-dir -r "requirements.txt"
+          pip3 install --no-cache-dir setuptools Levenshtein
+      - name: Generate build sources
+        run: python src/compiler/compile.py --file $CONFIG_FILE_PATH
+      - name: Install node dependencies
+        run: |
+          yarn install --ignore-engines
+      - name: Build app
+        env:
+          CI: ""
+        run: yarn build
+      - name: Build docker image
+        env:
+          Dockerfile_PATH: Dockerfile.heroku
+        run: docker build -f $Dockerfile_PATH -t $IMAGE_REPO/$APP_NAME/$HEROKU_PROCESS_TYPE .
+      - name: Setup Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+          heroku container:login
+      - name: Push docker image
+        run: docker push $IMAGE_REPO/$APP_NAME/$HEROKU_PROCESS_TYPE
+      - name: Update container image
+        run: |
+          heroku container:release $HEROKU_PROCESS_TYPE -a $APP_NAME
