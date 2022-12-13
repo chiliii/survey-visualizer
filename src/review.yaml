@@ -3,11 +3,7 @@ metadata:
   acronym: RMI
   name: Robot Motion Intent Survey
   title_text: 'How to Communicate Robot Motion Intent: A Scoping Review'
-  citation_text: "@inproceedings{rmi, \n title={{How to Communicate Robot\n\t
-    Motion Intent:\n\t
-    A Scoping Review}},
-    \n author={Blind for Review}, \n booktitle={In Rewiew}, \n
-    year={2023}}"
+  citation_text: false
   link_to_contribute: false
   link_to_code: https://github.com/TathagataChakraborti/survey-visualizer
   primary_link: false
@@ -121,4 +117,4 @@ views:
   match_threshold: 0.25
   disabled: false
 - name: Insights
-  disabled: true
+  disabled: false
