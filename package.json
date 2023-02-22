@@ -5,6 +5,7 @@
   "repository": "https://github.com/TathagataChakraborti/survey-visualizer",
   "bugs": "https://github.com/TathagataChakraborti/survey-visualizer/issues",
   "license": "Apache License 2.0",
+  "homepage" : "https://rmi.robot-research.de",
   "scripts": {
     "build": "react-scripts build",
     "ci-check": "yarn format:diff",
